@@ -12,9 +12,11 @@
         <router-link to="/seller" active-class="active">商家</router-link>
       </div>
     </div>
+    <transition :name="transitionName">
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
+    </transition>
   </div>
 </template>
 
@@ -26,6 +28,26 @@
     },
     created(){
         this.$store.dispatch('init')
+    },
+    data(){
+      return{
+        transitionName: 'slide-left'
+      }
+    },
+    beforeRouteUpdate (to, from, next) {
+      console.log('aaaaaa')
+        if(this.$route.path!='/seller') //假设name为home的路由都使用`slide-left`,其它的路由都为`slider-right`
+        {
+            this.$router.isBack=true;
+        }
+      let isBack = this.$router.isBack
+      if (isBack) {
+        this.transitionName = 'slide-right'
+      } else {
+        this.transitionName = 'slide-left'
+      }
+      this.$router.isBack = false
+      next()
     }
   }
 </script>
@@ -53,6 +75,25 @@
 
   }
 
+}
+.slide-left-enter-active ,.slide-left-leave-active{
+  transition: all .5s ease;
+}
+.slide-left-enter {
+  opacity: 0;
+}
+.slide-left-leave-to{
+  opacity: 0;
+}
+
+.slide-right-enter-active,.slide-right-leave-active {
+  transition: all .3s ease;
+}
+.slide-right-enter {
+  opacity: 0;
+}
+.slide-right-leave-to{
+    opacity: 0;
 }
 
 

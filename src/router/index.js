@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Goods from '@/components/goods'
 import seller from '@/components/seller'
 import Ratings from '@/components/ratings'
+import Input from '@/components/Input'
+import SelectCity from '@/components/selectCitye'
 import store from '../store'
 Vue.use(Router)
 if(window.localStorage.getItem('token')){
@@ -26,6 +28,14 @@ export default new Router({
     {
       path:"/seller",
       component: seller
+    },
+    {
+      path:"/input",
+      component: Input
+    },
+    {
+      path:"/city",
+      component: SelectCity
     }
   ]
 })
